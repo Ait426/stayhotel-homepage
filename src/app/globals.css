@@ -1,0 +1,392 @@
+/**
+ * Global Styles - Seoul Dragon City Style
+ *
+ * Premium luxury hotel design - minimal & elegant
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Google Fonts - Luxury Hotel Typography */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+/* CSS Variables - Seoul Dragon City Style */
+:root {
+  /* Colors */
+  --background: #ffffff;
+  --foreground: #1a1a1f;
+  --primary: #1a1a1f;
+  --primary-light: #2d2d35;
+  --primary-dark: #0d0d0f;
+  --accent: #c9a227;
+  --accent-light: #deba7c;
+  --accent-dark: #997426;
+
+  /* Fonts - Elegant Typography */
+  --font-heading: 'Playfair Display', 'Noto Serif KR', Georgia, serif;
+  --font-body: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-inter: 'Noto Sans KR', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
+
+  /* Spacing */
+  --header-height: 80px;
+  --section-padding: 5rem;
+
+  /* Transitions */
+  --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0d0d0f;
+    --foreground: #f5f5f5;
+  }
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--background);
+  color: var(--foreground);
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography - Luxury Hotel Style */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--foreground);
+  letter-spacing: 0.02em;
+}
+
+h1 { font-size: 3.5rem; font-weight: 400; letter-spacing: 0.05em; }
+h2 { font-size: 2.5rem; font-weight: 400; letter-spacing: 0.04em; }
+h3 { font-size: 1.75rem; font-weight: 500; }
+h4 { font-size: 1.375rem; font-weight: 500; }
+h5 { font-size: 1.125rem; font-weight: 600; }
+h6 { font-size: 1rem; font-weight: 600; }
+
+@media (max-width: 768px) {
+  h1 { font-size: 2.25rem; }
+  h2 { font-size: 1.875rem; }
+  h3 { font-size: 1.5rem; }
+  h4 { font-size: 1.25rem; }
+}
+
+p {
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+/* Scrollbar - Minimal */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Utility Classes */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply max-w-7xl mx-auto px-6 sm:px-8 lg:px-12;
+  }
+
+  .section {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl lg:text-5xl font-serif font-normal text-center mb-6 text-primary-900 tracking-wider;
+  }
+
+  .section-subtitle {
+    @apply text-center text-neutral-500 text-base md:text-lg max-w-3xl mx-auto mb-16 leading-relaxed font-light;
+  }
+
+  /* Button Styles - Seoul Dragon City Style */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2.5 px-8 py-3.5 text-sm font-medium cursor-pointer transition-all duration-300 uppercase tracking-widest;
+  }
+
+  .btn-primary {
+    @apply bg-primary-900 text-white hover:bg-accent-500 border border-primary-900 hover:border-accent-500;
+  }
+
+  .btn-accent {
+    @apply bg-accent-500 text-white hover:bg-accent-600 border border-accent-500 hover:border-accent-600;
+  }
+
+  .btn-outline {
+    @apply bg-transparent border border-primary-900 text-primary-900 hover:bg-primary-900 hover:text-white;
+  }
+
+  .btn-outline-white {
+    @apply bg-transparent border border-white text-white hover:bg-white hover:text-primary-900;
+  }
+
+  /* Card Styles - Minimal & Elegant */
+  .card {
+    @apply bg-white overflow-hidden transition-all duration-500 hover:shadow-2xl group;
+  }
+
+  /* Form Styles */
+  .form-group {
+    @apply mb-6;
+  }
+
+  .form-label {
+    @apply block text-xs font-medium mb-2 text-neutral-500 uppercase tracking-widest;
+  }
+
+  .form-input {
+    @apply w-full px-4 py-3.5 text-sm border-b border-neutral-300 bg-transparent transition-all duration-300 focus:outline-none focus:border-primary-900;
+  }
+
+  /* Badge - Elegant */
+  .badge {
+    @apply inline-block px-4 py-1.5 text-xs font-medium uppercase tracking-widest;
+  }
+
+  .badge-gold {
+    @apply bg-accent-500 text-white;
+  }
+
+  .badge-primary {
+    @apply bg-primary-900 text-white;
+  }
+
+  /* Divider - Elegant Line */
+  .divider {
+    @apply w-16 h-px bg-accent-500 mx-auto my-6;
+  }
+
+  /* Price styling */
+  .price {
+    @apply font-serif text-2xl text-primary-900 font-normal tracking-wide;
+  }
+
+  .price-unit {
+    @apply text-sm font-normal text-neutral-400 tracking-wide;
+  }
+
+  /* Gold accent underline */
+  .gold-underline {
+    @apply relative inline-block;
+  }
+
+  .gold-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-px bg-accent-500 transform scale-x-0 transition-transform duration-300 origin-left;
+  }
+
+  .gold-underline:hover::after {
+    @apply scale-x-100;
+  }
+}
+
+/* Hero overlay gradient - Sophisticated dark */
+.hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 26, 31, 0.4) 0%,
+    rgba(26, 26, 31, 0.2) 40%,
+    rgba(26, 26, 31, 0.6) 100%
+  );
+}
+
+/* Gold gradient text */
+.text-gold-gradient {
+  background: linear-gradient(135deg, var(--accent-light), var(--accent), var(--accent-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animation classes */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fade in up animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Stagger children animation */
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+
+/* Loading spinner - Elegant */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #f5f5f5;
+  border-top: 2px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Image placeholder gradient */
+.img-placeholder {
+  background: linear-gradient(135deg, #f5f5f5 0%, #fafafa 50%, #f5f5f5 100%);
+  background-size: 200% 200%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Parallax effect */
+.parallax {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Image zoom on hover */
+.img-zoom {
+  overflow: hidden;
+}
+
+.img-zoom img {
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.img-zoom:hover img {
+  transform: scale(1.08);
+}
+
+/* Elegant line animation */
+.line-animate {
+  position: relative;
+}
+
+.line-animate::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line-animate:hover::after {
+  width: 100%;
+}
+
+/* Overlay fade */
+.overlay-fade {
+  position: relative;
+}
+
+.overlay-fade::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26, 26, 31, 0.8) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.overlay-fade:hover::before {
+  opacity: 1;
+}

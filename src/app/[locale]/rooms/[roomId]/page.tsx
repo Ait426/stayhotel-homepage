@@ -1,0 +1,266 @@
+/**
+ * Room Detail Page
+ *
+ * Displays detailed information about a specific room.
+ */
+
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { Locale } from '@/types';
+import {
+  rooms,
+  getRoomBySlug,
+  getRoomName,
+  getRoomDescription,
+  formatPrice,
+} from '@/config/rooms';
+import { createTranslator } from '@/lib/translations';
+
+interface RoomDetailPageProps {
+  params: { locale: string; roomId: string };
+}
+
+export async function generateMetadata({ params }: RoomDetailPageProps) {
+  const room = getRoomBySlug(params.roomId);
+
+  if (!room) {
+    return { title: 'Room Not Found' };
+  }
+
+  const roomName = getRoomName(room, params.locale as Locale);
+  const description = getRoomDescription(room, params.locale as Locale);
+
+  return {
+    title: roomName,
+    description: description.slice(0, 160),
+  };
+}
+
+export default async function RoomDetailPage({ params }: RoomDetailPageProps) {
+  const { locale, roomId } = params;
+
+  const room = getRoomBySlug(roomId);
+
+  if (!room) {
+    notFound();
+  }
+
+  const t = createTranslator(locale, 'rooms');
+  const tCommon = createTranslator(locale, 'common');
+  const tBed = createTranslator(locale, 'bedTypes');
+  const tView = createTranslator(locale, 'viewTypes');
+
+  const roomName = getRoomName(room, locale as Locale);
+  const description = getRoomDescription(room, locale as Locale);
+
+  return (
+    <>
+      {/* Hero Section */}
+      <section className="pt-[180px] pb-16 bg-primary-900">
+        <div className="container-custom">
+          {/* Breadcrumb */}
+          <nav className="mb-8">
+            <ol className="flex items-center gap-2 text-sm text-neutral-300">
+              <li>
+                <Link
+                  href={`/${locale}`}
+                  className="hover:text-accent-500 transition-colors"
+                >
+                  {{ ko: '홈', en: 'Home', ja: 'ホーム', zh: '首页' }[locale]}
+                </Link>
+              </li>
+              <li>/</li>
+              <li>
+                <Link
+                  href={`/${locale}/rooms`}
+                  className="hover:text-accent-500 transition-colors"
+                >
+                  {t('title')}
+                </Link>
+              </li>
+              <li>/</li>
+              <li className="text-accent-500">{roomName}</li>
+            </ol>
+          </nav>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Image Gallery Placeholder */}
+            <div className="relative">
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-primary-700 to-primary-800">
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-white/10 flex items-center justify-center">
+                      <svg
+                        className="w-12 h-12 text-white/50"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                        />
+                      </svg>
+                    </div>
+                    <span className="text-white/50 text-lg">{roomName}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Room Info */}
+            <div>
+              <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-accent-500 text-primary-950 mb-4">
+                {{ ko: '객실 상세', en: 'Room Details', ja: '客室詳細', zh: '客房详情' }[locale]}
+              </span>
+              <h1 className="text-4xl md:text-5xl font-heading font-semibold text-white mb-4">
+                {roomName}
+              </h1>
+              <div className="w-16 h-1 bg-gradient-to-r from-accent-500 to-accent-400 my-6 rounded-full" />
+              <p className="text-neutral-200 text-lg mb-8">{description}</p>
+
+              {/* Price */}
+              <div className="bg-white/10 rounded-xl p-6 mb-8">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl font-heading font-semibold text-accent-500">
+                    {formatPrice(room.pricePerNight, locale as Locale)}
+                  </span>
+                  <span className="text-neutral-300">{tCommon('perNight')}</span>
+                </div>
+              </div>
+
+              {/* Quick Info */}
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                <div className="bg-white/5 rounded-lg p-4">
+                  <span className="text-neutral-400 text-sm block mb-1">
+                    {t('maxGuests')}
+                  </span>
+                  <span className="text-white font-medium">
+                    {room.maxGuests} {tCommon('guests')}
+                  </span>
+                </div>
+                <div className="bg-white/5 rounded-lg p-4">
+                  <span className="text-neutral-400 text-sm block mb-1">
+                    {t('roomSize')}
+                  </span>
+                  <span className="text-white font-medium">
+                    {room.size}
+                    {tCommon('sqm')}
+                  </span>
+                </div>
+                <div className="bg-white/5 rounded-lg p-4">
+                  <span className="text-neutral-400 text-sm block mb-1">
+                    {t('bedType')}
+                  </span>
+                  <span className="text-white font-medium">{tBed(room.bedType)}</span>
+                </div>
+                <div className="bg-white/5 rounded-lg p-4">
+                  <span className="text-neutral-400 text-sm block mb-1">
+                    {t('viewType')}
+                  </span>
+                  <span className="text-white font-medium">
+                    {room.viewType ? tView(room.viewType) : '-'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Book Button */}
+              <Link
+                href={`/${locale}/booking?room=${room.id}`}
+                className="inline-flex items-center gap-2 px-8 py-4 text-lg font-medium rounded-lg bg-accent-500 text-primary-950 hover:bg-accent-400 hover:-translate-y-0.5 hover:shadow-gold transition-all w-full justify-center"
+              >
+                {t('bookThisRoom')}
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Amenities Section */}
+      <section className="section bg-white">
+        <div className="container-custom">
+          <h2 className="text-2xl md:text-3xl font-heading font-semibold text-primary-900 mb-8">
+            {t('amenities')}
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {room.amenities.map((amenity) => (
+              <div
+                key={amenity.id}
+                className="flex items-center gap-3 p-4 bg-neutral-50 rounded-lg"
+              >
+                <div className="w-10 h-10 rounded-full bg-accent-500/10 flex items-center justify-center flex-shrink-0">
+                  <svg
+                    className="w-5 h-5 text-accent-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <span className="text-neutral-700 font-medium">
+                  {locale === 'ko' ? amenity.nameKo : amenity.nameEn}{/* ja/zh fallback to English */}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Other Rooms */}
+      <section className="section bg-neutral-50">
+        <div className="container-custom">
+          <h2 className="text-2xl md:text-3xl font-heading font-semibold text-primary-900 mb-8 text-center">
+            {{ ko: '다른 객실 둘러보기', en: 'Explore Other Rooms', ja: '他の客室を見る', zh: '浏览其他客房' }[locale]}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {rooms
+              .filter((r) => r.id !== room.id)
+              .slice(0, 3)
+              .map((otherRoom) => (
+                <Link
+                  key={otherRoom.id}
+                  href={`/${locale}/rooms/${otherRoom.slug}`}
+                  className="group bg-white rounded-xl p-6 hover:shadow-lg transition-all"
+                >
+                  <h3 className="font-heading text-lg font-semibold text-primary-900 group-hover:text-accent-600 transition-colors mb-2">
+                    {getRoomName(otherRoom, locale as Locale)}
+                  </h3>
+                  <p className="text-neutral-500 text-sm mb-4">
+                    {otherRoom.maxGuests} {tCommon('guests')} · {otherRoom.size}
+                    {tCommon('sqm')}
+                  </p>
+                  <span className="text-accent-600 font-semibold">
+                    {formatPrice(otherRoom.pricePerNight, locale as Locale)}
+                    <span className="text-neutral-400 font-normal text-sm">
+                      {tCommon('perNight')}
+                    </span>
+                  </span>
+                </Link>
+              ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}

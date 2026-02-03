@@ -1,0 +1,263 @@
+/**
+ * Room Configuration Data
+ *
+ * Contains all 7 room types with Korean/English descriptions.
+ * This data is used by the Mock CMS adapter.
+ * When integrating with a real CMS, this data will be fetched from the API.
+ */
+
+import { Room, RoomAmenity } from '@/types';
+
+// ============================================
+// Common Amenities
+// ============================================
+
+export const commonAmenities: RoomAmenity[] = [
+  { id: 'wifi', nameKo: '무료 Wi-Fi', nameEn: 'Free Wi-Fi', icon: 'wifi' },
+  { id: 'tv', nameKo: '스마트 TV', nameEn: 'Smart TV', icon: 'tv' },
+  { id: 'ac', nameKo: '에어컨', nameEn: 'Air Conditioning', icon: 'snowflake' },
+  { id: 'fridge', nameKo: '미니 냉장고', nameEn: 'Mini Refrigerator', icon: 'box' },
+  { id: 'safe', nameKo: '객실 금고', nameEn: 'In-room Safe', icon: 'lock' },
+  { id: 'toiletries', nameKo: '어메니티', nameEn: 'Toiletries', icon: 'sparkles' },
+];
+
+export const premiumAmenities: RoomAmenity[] = [
+  ...commonAmenities,
+  { id: 'bathtub', nameKo: '욕조', nameEn: 'Bathtub', icon: 'bath' },
+  { id: 'coffee', nameKo: '커피 머신', nameEn: 'Coffee Machine', icon: 'coffee' },
+  { id: 'minibar', nameKo: '미니바', nameEn: 'Mini Bar', icon: 'wine' },
+];
+
+export const suiteAmenities: RoomAmenity[] = [
+  ...premiumAmenities,
+  { id: 'living', nameKo: '거실 공간', nameEn: 'Living Area', icon: 'sofa' },
+  { id: 'jacuzzi', nameKo: '자쿠지', nameEn: 'Jacuzzi', icon: 'droplets' },
+  { id: 'view', nameKo: '시티 뷰', nameEn: 'City View', icon: 'building' },
+];
+
+// ============================================
+// Room Data - 7 Room Types
+// ============================================
+
+export const rooms: Room[] = [
+  // 1. Standard Room
+  {
+    id: 'standard',
+    slug: 'standard',
+    nameKo: '스탠다드',
+    nameEn: 'Standard',
+    descriptionKo:
+      '아늑하고 편안한 스탠다드 객실입니다. 비즈니스 출장이나 단기 투숙에 적합하며, 필수 편의시설이 완비되어 있습니다. 퀸 사이즈 침대와 쾌적한 욕실로 편안한 휴식을 보장합니다.',
+    descriptionEn:
+      'A cozy and comfortable standard room perfect for business trips or short stays. Equipped with essential amenities, featuring a queen-size bed and a pleasant bathroom for a restful experience.',
+    pricePerNight: 70000,
+    maxGuests: 2,
+    size: 20,
+    bedType: 'queen',
+    viewType: 'city',
+    amenities: commonAmenities,
+    images: [
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Standard+Room', alt: 'Standard Room', isPrimary: true },
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Standard+Bathroom', alt: 'Standard Room Bathroom' },
+    ],
+    isAvailable: true,
+  },
+
+  // 2. Standard Premium Room
+  {
+    id: 'standard-premium',
+    slug: 'standard-premium',
+    nameKo: '스탠다드 프리미엄',
+    nameEn: 'Standard Premium',
+    descriptionKo:
+      '스탠다드 객실의 업그레이드 버전으로, 더 넓은 공간과 추가 편의시설을 제공합니다. 프리미엄 침구류와 고급 어메니티로 한층 높은 수준의 편안함을 경험하세요.',
+    descriptionEn:
+      'An upgraded version of our standard room with more space and additional amenities. Experience enhanced comfort with premium bedding and luxury toiletries.',
+    pricePerNight: 80000,
+    maxGuests: 2,
+    size: 25,
+    bedType: 'queen',
+    viewType: 'city',
+    amenities: [...commonAmenities, { id: 'coffee', nameKo: '커피 머신', nameEn: 'Coffee Machine', icon: 'coffee' }],
+    images: [
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Standard+Premium', alt: 'Standard Premium Room', isPrimary: true },
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Premium+View', alt: 'Standard Premium Room View' },
+    ],
+    isAvailable: true,
+  },
+
+  // 3. Deluxe Room
+  {
+    id: 'deluxe',
+    slug: 'deluxe',
+    nameKo: '디럭스',
+    nameEn: 'Deluxe',
+    descriptionKo:
+      '세련된 인테리어와 넓은 공간의 디럭스 객실입니다. 킹 사이즈 침대, 고급 욕조, 시티 뷰가 제공되며 비즈니스와 레저 모두에 완벽한 선택입니다.',
+    descriptionEn:
+      'A sophisticated deluxe room with elegant interiors and spacious layout. Features a king-size bed, luxury bathtub, and city views - perfect for both business and leisure travelers.',
+    pricePerNight: 90000,
+    maxGuests: 2,
+    size: 30,
+    bedType: 'king',
+    viewType: 'city',
+    amenities: premiumAmenities,
+    images: [
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Deluxe+Room', alt: 'Deluxe Room', isPrimary: true },
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Deluxe+Bathroom', alt: 'Deluxe Room Bathroom' },
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Deluxe+View', alt: 'Deluxe Room View' },
+    ],
+    isAvailable: true,
+  },
+
+  // 4. Family Twin Room
+  {
+    id: 'family-twin',
+    slug: 'family-twin',
+    nameKo: '패밀리 트윈',
+    nameEn: 'Family Twin',
+    descriptionKo:
+      '가족 여행에 최적화된 트윈 베드 객실입니다. 두 개의 더블 베드가 제공되어 최대 4인까지 편안하게 투숙할 수 있습니다. 넓은 공간과 가족 친화적 편의시설을 갖추고 있습니다.',
+    descriptionEn:
+      'Optimized for family travel with twin bed configuration. Features two double beds accommodating up to 4 guests comfortably. Spacious layout with family-friendly amenities.',
+    pricePerNight: 90000,
+    maxGuests: 4,
+    size: 32,
+    bedType: 'twin',
+    viewType: 'garden',
+    amenities: [
+      ...premiumAmenities,
+      { id: 'extra-bed', nameKo: '추가 침구', nameEn: 'Extra Bedding', icon: 'bed' },
+    ],
+    images: [
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Family+Twin', alt: 'Family Twin Room', isPrimary: true },
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Twin+Beds', alt: 'Family Twin Room Beds' },
+    ],
+    isAvailable: true,
+  },
+
+  // 5. Family Triple Room
+  {
+    id: 'family-triple',
+    slug: 'family-triple',
+    nameKo: '패밀리 트리플',
+    nameEn: 'Family Triple',
+    descriptionKo:
+      '대가족을 위한 넓은 객실입니다. 더블 베드 1개와 싱글 베드 2개가 제공되어 최대 5인까지 투숙 가능합니다. 독립된 드레스룸과 넓은 욕실이 특징입니다.',
+    descriptionEn:
+      'A spacious room designed for larger families. Features one double bed and two single beds, accommodating up to 5 guests. Includes a separate dressing area and large bathroom.',
+    pricePerNight: 110000,
+    maxGuests: 5,
+    size: 38,
+    bedType: 'twin',
+    viewType: 'garden',
+    amenities: [
+      ...premiumAmenities,
+      { id: 'extra-bed', nameKo: '추가 침구', nameEn: 'Extra Bedding', icon: 'bed' },
+      { id: 'dressing', nameKo: '드레스룸', nameEn: 'Dressing Room', icon: 'wardrobe' },
+    ],
+    images: [
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Family+Triple', alt: 'Family Triple Room', isPrimary: true },
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Triple+Layout', alt: 'Family Triple Room Layout' },
+    ],
+    isAvailable: true,
+  },
+
+  // 6. Royal Suite
+  {
+    id: 'royal-suite',
+    slug: 'royal-suite',
+    nameKo: '로얄 스위트',
+    nameEn: 'Royal Suite',
+    descriptionKo:
+      '최고급 럭셔리 스위트 객실입니다. 독립된 거실과 침실, 대형 자쿠지 욕조, 파노라마 시티 뷰를 갖추고 있습니다. VIP 고객과 특별한 기념일에 완벽한 선택입니다.',
+    descriptionEn:
+      'Our premium luxury suite offering the finest accommodations. Features separate living room and bedroom, large jacuzzi bath, and panoramic city views. Perfect for VIP guests and special occasions.',
+    pricePerNight: 130000,
+    maxGuests: 2,
+    size: 45,
+    bedType: 'king',
+    viewType: 'city',
+    amenities: suiteAmenities,
+    images: [
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Royal+Suite', alt: 'Royal Suite', isPrimary: true },
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Suite+Living', alt: 'Royal Suite Living Room' },
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Suite+Bathroom', alt: 'Royal Suite Bathroom' },
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Suite+View', alt: 'Royal Suite View' },
+    ],
+    isAvailable: true,
+  },
+
+  // 7. Party Suite
+  {
+    id: 'party-suite',
+    slug: 'party-suite',
+    nameKo: '파티 스위트',
+    nameEn: 'Party Suite',
+    descriptionKo:
+      '특별한 모임을 위한 최대 규모의 스위트 객실입니다. 넓은 거실 공간은 소규모 파티나 비즈니스 미팅에 적합하며, 최대 6인이 투숙 가능합니다. 프라이빗한 분위기에서 특별한 순간을 만드세요.',
+    descriptionEn:
+      'Our largest suite designed for special gatherings. The spacious living area is perfect for intimate parties or business meetings, accommodating up to 6 guests. Create memorable moments in a private setting.',
+    pricePerNight: 200000,
+    maxGuests: 6,
+    size: 60,
+    bedType: 'king',
+    viewType: 'city',
+    amenities: [
+      ...suiteAmenities,
+      { id: 'sound', nameKo: '사운드 시스템', nameEn: 'Sound System', icon: 'music' },
+      { id: 'projector', nameKo: '프로젝터', nameEn: 'Projector', icon: 'projector' },
+      { id: 'kitchen', nameKo: '간이 주방', nameEn: 'Kitchenette', icon: 'utensils' },
+    ],
+    images: [
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Party+Suite', alt: 'Party Suite', isPrimary: true },
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Party+Living', alt: 'Party Suite Living Area' },
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Party+Bedroom', alt: 'Party Suite Bedroom' },
+      { url: 'https://placehold.co/800x600/1a237e/d4af37?text=Entertainment', alt: 'Party Suite Entertainment' },
+    ],
+    isAvailable: true,
+  },
+];
+
+/**
+ * Get room by ID
+ */
+export const getRoomById = (id: string): Room | undefined => {
+  return rooms.find((room) => room.id === id);
+};
+
+/**
+ * Get room by slug
+ */
+export const getRoomBySlug = (slug: string): Room | undefined => {
+  return rooms.find((room) => room.slug === slug);
+};
+
+/**
+ * Get all available rooms
+ */
+export const getAvailableRooms = (): Room[] => {
+  return rooms.filter((room) => room.isAvailable);
+};
+
+/**
+ * Format price in KRW
+ */
+export const formatPrice = (price: number, locale: string): string => {
+  const localeMap: Record<string, string> = { ko: 'ko-KR', en: 'en-US', ja: 'ja-JP', zh: 'zh-CN' };
+  return `₩${price.toLocaleString(localeMap[locale] || 'en-US')}`;
+};
+
+/**
+ * Get room name by locale
+ */
+export const getRoomName = (room: Room, locale: string): string => {
+  return locale === 'ko' ? room.nameKo : room.nameEn;
+};
+
+/**
+ * Get room description by locale
+ */
+export const getRoomDescription = (room: Room, locale: string): string => {
+  return locale === 'ko' ? room.descriptionKo : room.descriptionEn;
+};
